@@ -101,3 +101,94 @@
         - Has it's own package manager
         - Uses Rollup
 
+## Linting
+
+- JSLint: original, opinionated
+- JSHint: offres more configurability than JSLint
+- ESLint (`*`): de facto standard
+
+### Configuring ESLint
+
+- Decisions
+  - Config format
+    - lots of options
+    - can use package.json or .eslintrc
+  - Which built-in tools to use?
+    - catches common errors out of the box
+  - Warnings or errors?
+    - Warnings don't break the build, but errors do
+    - Choose based on context
+  - What plugins do we use?
+    - reference: `github.com/dustinspecker/awesome-eslint`
+  - Use a preset?
+    - recommended preset from eslint
+    - can use rules from airbnb, standardjs, or others
+
+**Note**: eslint doesn't automatically watch files, but you can
+implement it using webpack and `eslint-loader` or add `eslint-watch`
+to enable this functionality.
+
+## Testing
+
+Testing addresses `unit testing` not integration or ui testing.
+
+### 6 Key Decisions
+
+1. Testing Framework
+  - Mocha (`*`): popular, mature, flexible
+  - Jasmine:
+  - Tape: simple configuration
+  - QUnit: older
+  - AVA:
+  - Jest: Facebook, wrapper over Jasmine
+2. Assertion Libraries
+  - Jasmine and Jest come with library build in
+  - Mocha does not
+  - Chai (`*`): popular assertion library []
+3. Helper Libraries
+  - JSDOM (`*`): simulates the browsers DOM
+  - Cherrio: jQuery for the server
+4. Where to Run Tests
+  - Browser: Karma, Testem
+  - Headless Browser: PhantomJS
+  - In-memory DOM: JSDOM (`*`)
+5. Where do Test Files Live
+  - Centralized
+    - less noise in src folder
+    - deployment confusion
+  - Alongside (`*`)
+    - makes imports easier
+    - tests are clearly visible
+    - convenient to open tests and code at the same time
+    - easy file moves
+    - no recreating directory structure
+6. When should tests run?
+  - Every time we hit save
+    - Facilitates TDD
+    - Automated
+    - Should run quickly
+  - Unit tests
+    - small unit is tested
+    - fast
+    - run on save
+  - Integration testing
+    - involves clicking and waiting
+    - slow
+    - run on demand or only in QA
+
+### Continuous Integration Server
+
+- Prevent "Works on my machine" syndrome
+  - bad merge, change to build scripts, node version conflicts, forgotten updates
+- CI Server
+  - Builds on a secondary machine after commit is pushed
+  - Runs test suite
+  - Check code coverage
+  - Can also automate deployment
+- Options
+  - TravisCI: hosted solution for Linux
+  - Appveyor: Windows-based solution
+  - Jenkins: can be installed on your own servers
+  - CircleCI
+  - Semaphore
+  - SnapCI
